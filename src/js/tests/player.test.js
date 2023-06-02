@@ -16,4 +16,11 @@ describe("player attack", () => {
         player1.attack(enemyGameboard, 1, 2);
         expect(enemyGameboard.getBoard()[1][2].ship.getHits()).toEqual([null, "hit"]);
     })
+});
+
+describe("random attack", () => {
+    const bot = Player();
+    const enemyGameboard = Gameboard();
+    bot.randomAttack(enemyGameboard);
+    expect(enemyGameboard.getBoard().every(spot => spot === null)).toBeFalsy();
 })
