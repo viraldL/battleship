@@ -102,14 +102,39 @@ describe("receive attack" , () => {
     });
 });
 
+describe("are all ships sunk", () => {
+    const gameboard = Gameboard();
+    const patrolBoat = Ship(shipClass.patrolBoat);
+    const submarine = Ship(shipClass.submarine);
+    submarine.changeDirection();
+    gameboard.placeShip(patrolBoat, 1, 4);
+    gameboard.placeShip(submarine, 3, 2);
+    test("not sunk 1", () => {
+        expect(gameboard.isAllSunk()).toBeFalsy();
+    });
+    test("not sunk 2", () => {
+        gameboard.receiveAttack(1, 4);
+        gameboard.receiveAttack(1, 5);
+        expect(gameboard.isAllSunk()).toBeFalsy();
+    });
+
+    test("all sunk", () => {
+        gameboard.receiveAttack(3, 2);
+        gameboard.receiveAttack(4, 2);
+        gameboard.receiveAttack(5, 2);
+        expect(gameboard.isAllSunk()).toBeTruthy();
+    })
+
+})
+
 
 // [
 //     [null, null, null, null, null, null, null, null, null, null],
+//     [null, null, null, null, AA, AA, null, null, null, null],
 //     [null, null, null, null, null, null, null, null, null, null],
-//     [null, AA, null, null, null, null, null, null, null, null],
-//     [null, AA, null, null, null, null, null, null, null, null],
-//     [null, AA, null, null, null, null, null, null, null, null],
-//     [null, AA, null, null, null, null, null, null, null, null],
+//     [null, null, AA, null, null, null, null, null, null, null],
+//     [null, null, AA, null, null, null, null, null, null, null],
+//     [null, null, AA, null, null, null, null, null, null, null],
 //     [null, null, null, null, null, null, null, null, null, null],
 //     [null, null, null, null, null, null, null, null, null, null],
 //     [null, null, null, null, null, null, null, null, null, null],
